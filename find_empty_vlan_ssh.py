@@ -33,7 +33,7 @@ def dev_connect(start_vlan, end_vlan):
     device = {
         "device_type": "juniper",
         "host": parse_host(in_host),
-        "username": "o.laposhin",
+        "username": user_name,
         "password": password
         }
 
@@ -74,6 +74,9 @@ def dev_connect(start_vlan, end_vlan):
     print('<<<ERROR:>>>', router, error)
 
 if __name__ == '__main__':
+### DEBUG
+    user_name = "o.laposhin"
+###
     # get pe
     in_host = input("PE hostname or IP: ")
     # get password
