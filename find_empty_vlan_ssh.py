@@ -1,94 +1,89 @@
 #!/usr/bin/python3
 
 import sys
-import pexpect
 import re
 import getpass
 
-password = getpass.getpass()
+from netmiko import (
+    ConnectHandler,
+    NetmikoTimeoutException,
+    NetmikoAuthenticationException,
+)
 
-def parse_host():
-
-    match = re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', sys.argv[1])
-
+def parse_host(host):
+    match_ip = re.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', host)
     # if arg is IP address
-    if match:
-        host = match.group()
+    if match_ip:
+        host = match_ip.group()
     else:
-    # if arg is hostname
-        if len(sys.argv[1]) < 25:
-            host = str(sys.argv[1]) + ".miranda-media.net"
-        else:
-            host = str(sys.argv[1])
+      # if arg is hostname
+        match_domain = re.search('.net$', host)
+        if not match_domain:
+            host = host + ".miranda-media.net"
+
     return host
 
+# exec cli command on device and print output
+def display_info(net_connect, cli_commmand):
+    output = net_connect.send_command(cli_commmand)
+    print(output)
 
-def cli_login():
+def dev_connect(start_vlan, end_vlan):
+  try:
+    device = {
+        "device_type": "juniper",
+        "host": parse_host(in_host),
+        "username": "o.laposhin",
+        "password": password
+        }
 
-    child.expect('Password: ')
-    child.sendline(password)
-    child.expect('>')
+    net_connect = ConnectHandler(**device)
 
-# check if interface unit is not used
-def check_jun_unit():
+    curr_vlan = int(start_vlan)
 
-    curr_vlan = int(s_vlan)
-#    print('######################################################')
-
+# loop checks if interface unit is not used
     while True:
-
         cli_line = 'show interface terse | match ' + str(curr_vlan)
 
         # print every 10-th check as debug
-        if (curr_vlan % 10 == 0):
-            print('--- checking ' + str(curr_vlan)[:-1] + '_')
-###        print(cli_line)
+#        if (curr_vlan % 10 == 0):
+#            print('--- checking ' + str(curr_vlan)[:-1] + '_')
 
-        child.sendline(cli_line)
-        child.expect(cli_line)
-        child.expect('>')
+        output = net_connect.send_command(cli_line)
+
+#        print("vlan: ", output)
+#        print("len:", len(output))
 
         #
         # find empty units using length of cli output
-        # if juniper cli has {master} : len=37 means 'empty' unit
-        # if juniper cli without {master} : len=27 means 'empty' unit
+        # if juniper cli has {master} : len=9 means 'empty' unit
+        # if juniper cli without {master} : len=XXX means 'empty' unit
         #
 
-#        print('len=' + str(len(child.before)))
-
-        if (len(child.before) == 37):
-#            print('unit ' + str(curr_vlan))
-            print(str(curr_vlan))
+        if len(output) == 9:
+            print(curr_vlan)
 
         curr_vlan += 1
-        if curr_vlan > int(f_vlan):
+        if curr_vlan > int(end_vlan):
             break
 
-# exit juniper cli
-def logout():
-    child.sendline('quit')
+    # close connection
+    net_connect.disconnect()
 
+  except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
+    print('<<<ERROR:>>>', router, error)
 
 if __name__ == '__main__':
-    #start vlan
-    s_vlan = int(input("Start vlan: ")) 
-
-    #finish vlan
+    # get pe
+    in_host = input("PE hostname or IP: ")
+    # get password
+    password = getpass.getpass()
+    #get start vlan
+    start_vlan = int(input("Start vlan: ")) 
+    #get finish vlan
     while True:
-        f_vlan = int(input("Finish vlan: "))
-        if (f_vlan > s_vlan):
+        end_vlan = int(input("End vlan: "))
+        if (end_vlan > start_vlan):
             break
 
-    s_link = 'ssh o.laposhin@' + parse_host()
-
-    # ssh to juniper
-    child = pexpect.spawn(s_link)
-
-    # login to juniper
-    cli_login()
-
-    # check unit
-    check_jun_unit()
-
-    # exit juniper cli
-    logout()
+    dev_connect(start_vlan, end_vlan)
