@@ -69,10 +69,7 @@ def logout():
     child.sendline('quit')
 
 
-#********************** main script *****************************
-
-if '__name__' == '__main__':
-
+if __name__ == '__main__':
     #start vlan
     s_vlan = int(input("Start vlan: ")) 
 
