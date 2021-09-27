@@ -75,9 +75,10 @@ def dev_connect(start_vlan, end_vlan):
 
 if __name__ == '__main__':
 
-    user_name = input("Login: ")
     # get pe
     in_host = input("PE hostname or IP: ")
+
+    user_name = input("Login: ")
     # get password
     password = getpass.getpass()
     #get start vlan
