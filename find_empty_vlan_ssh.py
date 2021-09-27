@@ -74,9 +74,8 @@ def dev_connect(start_vlan, end_vlan):
     print('<<<ERROR:>>>', router, error)
 
 if __name__ == '__main__':
-### DEBUG
-    user_name = "o.laposhin"
-###
+
+    user_name = input("Login: ")
     # get pe
     in_host = input("PE hostname or IP: ")
     # get password
