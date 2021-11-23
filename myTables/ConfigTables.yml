@@ -1,0 +1,27 @@
+---
+UserTable:
+  get: system/login/user
+  view: UserView
+
+UserView:
+  fields:
+    username: name
+    userclass: class
+
+ExtendedUserTable:
+  get: system/login/user
+  view: ExtendedUserView
+
+ExtendedUserView:
+  fields:
+    username: name
+    userclass: class
+    userid: uid
+
+IfaceTable:
+  get: interfaces/interface
+  view: IfaceView
+
+IfaceView:
+  fields:
+    ifname: unit/name
