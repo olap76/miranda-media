@@ -70,7 +70,6 @@ def asw_del_zond_vlan(read_file):
 #---
                 child.close()
 
-
             except (pexpect.exceptions.TIMEOUT) as error:
 #                print('   !!! ip:', ip, error)
                 print('!!! UNAVAILABLE:', ip)
@@ -78,7 +77,6 @@ def asw_del_zond_vlan(read_file):
                     writer = csv.writer(wr_f, delimiter=';')
                     line = [ip, vid]
                     writer.writerow(line)
-
 
 #--------------main---------------------
 
