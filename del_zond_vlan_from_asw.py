@@ -7,12 +7,14 @@ import re
 import getpass
 
 username = 'o.laposhin'
-file = 'asw_26.txt'
 password = getpass.getpass()
 
-def asw_del_zond_vlan(file):
+read_file = 'asw_26.txt'
+write_file = 'unavailable_asw.txt'
 
-    with open(file, "r", encoding="utf-8") as f:
+def asw_del_zond_vlan(read_file):
+
+    with open(read_file, "r", encoding="utf-8") as f:
         raw_data = csv.reader(f, delimiter=";")
         for ip, vid in raw_data:
 
@@ -70,12 +72,16 @@ def asw_del_zond_vlan(file):
 
 
             except (pexpect.exceptions.TIMEOUT) as error:
-                print('   !!! ip:', ip, error)
-
+#                print('   !!! ip:', ip, error)
+                print('!!! UNAVAILABLE:', ip)
+                with open(write_file, "a", encoding="utf-8", newline='') as wr_f:
+                    writer = csv.writer(wr_f, delimiter=';')
+                    line = [ip, vid]
+                    writer.writerow(line)
 
 
 #--------------main---------------------
 
 if __name__ == '__main__':
 
-    asw_del_zond_vlan(file)
+    asw_del_zond_vlan(read_file)
