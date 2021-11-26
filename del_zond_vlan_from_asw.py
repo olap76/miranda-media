@@ -7,7 +7,7 @@ import re
 import getpass
 
 username = 'o.laposhin'
-file = 'asw_22_11_21.txt'
+file = 'asw_26.txt'
 password = getpass.getpass()
 
 def asw_del_zond_vlan(file):
