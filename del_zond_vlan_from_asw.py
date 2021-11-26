@@ -1,13 +1,10 @@
-
 #!/usr/bin/python3
-
 
 import csv
 import sys
 import pexpect
 import re
 import getpass
-
 
 username = 'o.laposhin'
 file = 'asw_22_11_21.txt'
