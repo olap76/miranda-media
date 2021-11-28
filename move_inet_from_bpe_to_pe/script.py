@@ -22,7 +22,7 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
             sw = {}
 
-            # input file format:
+            # data_file format:
             # ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 --
             line_list = line.split("|")
 
@@ -34,7 +34,7 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
             sw["interface"] = iface_unit_list[0]
             sw["unit"] = iface_unit_list[1]
-            sw["suz"] = "_SUZ-XXXXX_"
+            sw["suz"] = "SUZ-"
             sw["client"] = line_list[2].strip()
             sw["policerdesc"] = line_list[3].strip()
 
@@ -46,10 +46,10 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
             sw["who"] = line_list[6].strip()
             sw["policer"] = "lim" + line_list[3][1:-2] + line_list[3][-2].lower()
 
-            # get ip from bpe using iface description
+            # get ip and interface from bpe using iface description
             pe_ip, bpe_iface = get_ip(line_list[7], bpe_ip, user, passwd)
 
-            bpe_iface_file.write(bpe_iface + '\n')
+            bpe_iface_file.write('delete interfaces ' + bpe_iface + '\n')
 #            print('>>>', bpe_iface)
 
             print('ip: ', pe_ip)
@@ -62,6 +62,7 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
             variables.append(sw)
 
+    bpe_iface_file.write('---')
     bpe_iface_file.close()
 
     env = Environment(loader=FileSystemLoader("."))
@@ -143,7 +144,7 @@ if __name__ == "__main__":
 
     out_pe_file = pe_name + '.txt'
 
-    out_bpe_file = 'BPE_FILE.txt'
+    out_bpe_file = 'SMFL-04-BPE1' + '_' + pe_name + '.txt'
 
     bpe_ip = "185.64.44.44"
 
