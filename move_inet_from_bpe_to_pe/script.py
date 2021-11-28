@@ -1,9 +1,16 @@
 #!/usr/bin/python3
 
+from netmiko import (
+    ConnectHandler,
+    NetmikoTimeoutException,
+    NetmikoAuthenticationException,
+)
+
+import getpass
 import csv
 from jinja2 import Environment, FileSystemLoader
 
-def main(user_pe):
+def main(pe_name, bpe_ip, user, passwd):
 
     variables = []
     with open("file_28_11.txt", "r", encoding="utf-8") as f:
@@ -12,7 +19,7 @@ def main(user_pe):
             sw = {}
 
             # input file format:
-            # ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 -- 
+            # ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 --
             line_list = line.split("|")
 
             # extract iface and unit to list
@@ -31,11 +38,15 @@ def main(user_pe):
             sw["date"] = line_list[5].strip()
             sw["who"] = line_list[6].strip()
             sw["policer"] = "lim" + line_list[3][1:-2] + line_list[3][-2].lower()
+
+            # get ip from bpe using iface description
+            get_ip(line_list[7], bpe_ip, user, passwd)
+
             sw["ip"] = "_IP_"
             sw["instance"] = "INET-B2B"
 
             # ask PE from user
-            sw["pe_site"] = user_pe
+            sw["pe_site"] = pe_name
 
             variables.append(sw)
 
@@ -47,10 +58,62 @@ def main(user_pe):
             f.write(template.render(line))
             f.write("\n")
 
+def check_desc(desc_string):
+
+#    print(desc_string)
+    desc_list = desc_string.split()
+    # string for search on bpe
+    search_str = desc_list[0]
+
+    # if start with 2 digits - string valid, else - get next field
+    if not search_str[0].isdigit() or not search_str[1].isdigit():
+
+        temp_list = desc_list[0].split(",")
+        search_str = temp_list[1]
+
+    return search_str
+
+def get_ip(desc_string, bpe_ip, user, passwd):
+
+    search_str = check_desc(desc_string)
+
+#    print(search_str)
+
+    try:
+        device = {
+            "device_type": "juniper",
+            "host": bpe_ip,
+            "username": user,
+            "password": passwd
+        }
+
+        net_connect = ConnectHandler(**device)
+
+        cli_line = 'show interfaces descriptions | match ' + search_str
+
+        output = net_connect.send_command(cli_line)
+
+        print(output)
+
+        # close connection
+        net_connect.disconnect()
+
+    except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
+        print('<<<ERROR:>>>', router, error)
+
+
 #--------------main---------------------
 
 if __name__ == "__main__":
+    # ask pe
+    pe_name = str(input("Enter PE (ex: KRCH-00-AR2):" ))
 
-    user_pe = str(input("Enter PE (ex: KRCH-00-AR2):" ))
+    bpe_ip = "185.64.44.44"
 
-    main(user_pe)
+    user= "o.laposhin"
+
+    # get password
+    passwd = getpass.getpass()
+
+    main(pe_name, bpe_ip, user, passwd)
+
