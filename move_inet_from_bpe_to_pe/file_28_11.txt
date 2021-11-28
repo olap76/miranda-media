@@ -1,20 +1,23 @@
 ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 --
 ge-1/2/1.1119   up    up   -- VPSL | - | VSK-Invest | 100M | CHRN,ul.Signalnaya,2v to BPE | 03.09.21 | kozub | 110-1119 --
 ge-1/2/1.1120   up    up   -- VPSL | - | VSK-Invest | 50M | CHRN,ul.Signalnaya,2v to BPE | 10.11.21 | poroshin | 110-1120 --
+xe-2/0/2.1028   up    up   -- VPLS | ZAGS(MinYust) | 30M | CHRN,per.Bolnichnyi,2 to BPE | 30.03.18 | gusev | 110-1028 --
+xe-2/0/2.1118   up    up   -- VPLS | - | Gemotest | CHRN,ul.Revolucii,9a to BPE | 23.08.21 | yakubovskiy | 110-1118 --
 xe-2/0/3.1016   up    up   -- VPLS | 1267381 | Genbank | 15M | CHRN,ul.Kirova,7 to BPE | 25.01.16 | kasyanov | 110-1016 --
 xe-2/0/3.1021   up    up   -- VPLS | - | ChRCB | 30M | CHRN,ul.Medicinskaya,5 to BPE | 13.05.16 | anife | Bolnica,110-1021 --
 xe-2/0/3.1031   up    up   -- VPLS | 1291433 | ChRCB | 130M | CHRN,ul.Medicinskaya,5 to BPE | 24.05.18 | anife | 2nd,110-1031 --
 xe-2/0/3.1034   up    up   -- VPLS | 1316627 | RNKB | 2M | CHRN,ul.Yznaya,56A to BPE | 18.12.17 | yakubovskiy | 110-1034 --
 xe-2/0/3.1049   up    up   -- VPLS | - | FSS | 10M | CHRN,ul.Dimitrova,15,kv.42 to BPE | 25.12.20 | poroshin | 1st,110-1049,20-423597-1 --
+xe-2/0/3.1054   up    up   -- VPLS | - | IP Polchenko | 50M | CHRN,s.Novoivanovka to BPE | 04.08.20 | stadnik | 110-1054 --
 xe-2/1/1.1020   up    up   -- VPLS | - | SKRF | 10M | CHRN,ul.Revolucii,8 to BPE | 13.03.17 | anife | 110-1020 --
 xe-2/1/1.1022   up    up   -- VPLS | - | Krym BTI | 20M | CHRN,ul.Dimitrova,1A to BPE | 28.03.17 | anife | 110-1022 --
 xe-2/1/1.1026   up    up   -- VPLS | 1277725 | RNKB | 2M | CHRN,ul.Lomonosova,1 to BPE | 30.11.17 | yakubovskiy | 110-1026 --
 xe-2/1/1.1036   up    up   -- VPLS | 1421412 | DNS-DON | 5M | CHRN,ul.Revolucii,9A to BPE | 19.05.20 | nabokov | 110-1036 --
 xe-2/1/1.1039   up    up   -- VPLS | 1435648 | Invitro | 10M | CHRN,ul.Kirova,71 to BPE | 04.04.19 | prilipko | 110-1039 --
+xe-2/1/1.1055   up    up   -- VPLS | - | Semeynaya Apteka | 20M | CHRN,ul.Kirova,37 to BPE | 09.06.21 | karahanov | 110-1055 --
 xe-2/1/1.1056   up    up   -- VPLS | - | Skvorcovo | 10M | CHRN,ul.Ujnaya,56a to BPE | 02.06.21 | sorochkin | 110-1056 --
 xe-2/1/1.1081   up    up   -- VPLS | - | RNKB | 2M | CHRN,ul.Revolucii,7 to BPE | 18.12.20 | nabokov | 110-1081 --
 xe-2/1/1.1100   up    up   -- VPLS | - | SZO | 50M | CHRN,ul.Uzhnaya,15 to BPE | 17.06.20 | nabokov | 110-1100 --
 xe-2/1/1.1710   up    up   -- VPLS | - | SZO | 100M | CHRN,ul.Lenina,27 to BPE | 02.11.21 | nabokov | 110-1710 --
 xe-2/1/2.1110   up    up   -- VPLS | - | SZO | 10M | CHRN,Novoozernoe,ul.Molodezhnaya,1 to BPE | 02.11.21 | nabokov | 110-1110 --
 xe-2/1/2.1112   up    up   -- VPLS | - | SZO | 10M | CHRN,Novoozernoe,ul.G.Desantnikov,9 to BPE | 02.11.21 | nabokov | 110-1112 --
-xe-2/1/1.1055   up    up   -- VPLS | - | Semeynaya Apteka | 20M | CHRN,ul.Kirova,37 to BPE | 09.06.21 | karahanov | 110-1055 --

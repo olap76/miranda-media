@@ -26,6 +26,7 @@ def main(pe_name, bpe_ip, user, passwd):
             # extract iface and unit to list
             iface_unit_list = line_list[0].split()[0].split(".")
             # for debug
+            print('---')
             print('iface: ', iface_unit_list[0] + "." + iface_unit_list[1])
 
             sw["interface"] = iface_unit_list[0]
