@@ -6,6 +6,7 @@ from netmiko import (
     NetmikoAuthenticationException,
 )
 
+import json
 import getpass
 import csv
 from jinja2 import Environment, FileSystemLoader
@@ -24,6 +25,8 @@ def main(pe_name, bpe_ip, user, passwd):
 
             # extract iface and unit to list
             iface_unit_list = line_list[0].split()[0].split(".")
+            # for debug
+            print('iface: ', iface_unit_list[0] + "." + iface_unit_list[1])
 
             sw["interface"] = iface_unit_list[0]
             sw["unit"] = iface_unit_list[1]
@@ -40,9 +43,11 @@ def main(pe_name, bpe_ip, user, passwd):
             sw["policer"] = "lim" + line_list[3][1:-2] + line_list[3][-2].lower()
 
             # get ip from bpe using iface description
-            get_ip(line_list[7], bpe_ip, user, passwd)
+            pe_ip = get_ip(line_list[7], bpe_ip, user, passwd)
 
-            sw["ip"] = "_IP_"
+            print('ip: ', pe_ip)
+
+            sw["ip"] = pe_ip
             sw["instance"] = "INET-B2B"
 
             # ask PE from user
@@ -91,16 +96,31 @@ def get_ip(desc_string, bpe_ip, user, passwd):
 
         cli_line = 'show interfaces descriptions | match ' + search_str
 
+        output = net_connect.send_command(cli_line).split()
+
+        iface = output[0]
+
+#        print(iface)
+
+        cli_line = 'show configuration interfaces ' + iface + ' | display json'
+
         output = net_connect.send_command(cli_line)
 
-        print(output)
+#        print(output)
 
-        # close connection
+        temp = json.loads(output)
+
+        ip_addr = temp['configuration']['interfaces']['interface'][0]['unit'][0]['family']['inet']['address'][0]['name']
+
+       # close connection
         net_connect.disconnect()
 
     except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
         print('<<<ERROR:>>>', router, error)
 
+
+#    print(ip_addr)
+    return ip_addr
 
 #--------------main---------------------
 
