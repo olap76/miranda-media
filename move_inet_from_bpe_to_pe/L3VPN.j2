@@ -1,0 +1,12 @@
+
+delete interfaces {{ interface }}.{{ unit }}
+delete routing-instances INET-via-BPE interface {{ interface }}.{{ unit }}
+delete routing-instances INET-via-BPE protocols vpls site {{ pe_site }} interface {{ interface }}.{{ unit }}
+
+set interfaces {{ interface }} unit {{ unit }} description "## INET | {{ suz }} | {{ client }} | {{ policerdesc }} | {{ location }} | {{ date }} | {{ who }} | - ##"
+set interfaces {{ interface }} unit {{ unit }} vlan-id {{ unit }}
+set interfaces {{ interface }} unit {{ unit }} family inet mtu 1500
+set interfaces {{ interface }} unit {{ unit }} family inet policer input {{ policer }}
+set interfaces {{ interface }} unit {{ unit }} family inet policer output {{ policer }}
+set interfaces {{ interface }} unit {{ unit }} family inet address {{ ip }}
+set routing-instances {{ instance }} interface {{ interface }}.{{ unit }}
