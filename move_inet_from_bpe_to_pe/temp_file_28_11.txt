@@ -1,0 +1,3 @@
+ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 --
+ge-1/2/1.1119   up    up   -- VPSL | - | VSK-Invest | 100M | CHRN,ul.Signalnaya,2v to BPE | 03.09.21 | kozub | 110-1119 --
+ge-1/2/1.1120   up    up   -- VPSL | - | VSK-Invest | 50M | CHRN,ul.Signalnaya,2v to BPE | 10.11.21 | poroshin | 110-1120 --

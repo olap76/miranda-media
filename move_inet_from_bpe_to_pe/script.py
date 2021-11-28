@@ -11,10 +11,13 @@ import getpass
 import csv
 from jinja2 import Environment, FileSystemLoader
 
-def main(pe_name, bpe_ip, user, passwd, out_pe_file):
+def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
+
+
+    bpe_iface_file = open(out_bpe_file, 'a')
 
     variables = []
-    with open("file_28_11.txt", "r", encoding="utf-8") as f:
+    with open(data_file, "r", encoding="utf-8") as f:
         for line in f:
 
             sw = {}
@@ -44,7 +47,10 @@ def main(pe_name, bpe_ip, user, passwd, out_pe_file):
             sw["policer"] = "lim" + line_list[3][1:-2] + line_list[3][-2].lower()
 
             # get ip from bpe using iface description
-            pe_ip = get_ip(line_list[7], bpe_ip, user, passwd)
+            pe_ip, bpe_iface = get_ip(line_list[7], bpe_ip, user, passwd)
+
+            bpe_iface_file.write(bpe_iface + '\n')
+#            print('>>>', bpe_iface)
 
             print('ip: ', pe_ip)
 
@@ -56,8 +62,11 @@ def main(pe_name, bpe_ip, user, passwd, out_pe_file):
 
             variables.append(sw)
 
+    bpe_iface_file.close()
+
     env = Environment(loader=FileSystemLoader("."))
     template = env.get_template("L3VPN.j2")
+
     # save PE config
     with open(out_pe_file, "w", encoding="utf-8") as f:
         for line in variables:
@@ -121,7 +130,7 @@ def get_ip(desc_string, bpe_ip, user, passwd):
 
 
 #    print(ip_addr)
-    return ip_addr
+    return ip_addr, iface
 
 #--------------main---------------------
 
@@ -130,9 +139,11 @@ if __name__ == "__main__":
     # ask pe
     pe_name = str(input("Enter PE (ex: KRCH-00-AR2):" ))
 
+    data_file = 'file_28_11.txt'
+
     out_pe_file = pe_name + '.txt'
 
-    out_bpe_file = 'SMFL-04-BPE1' + '_' + 'pe_name.txt'
+    out_bpe_file = 'BPE_FILE.txt'
 
     bpe_ip = "185.64.44.44"
 
@@ -141,5 +152,5 @@ if __name__ == "__main__":
     # get password
     passwd = getpass.getpass()
 
-    main(pe_name, bpe_ip, user, passwd, out_pe_file)
+    main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file)
 
