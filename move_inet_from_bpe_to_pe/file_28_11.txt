@@ -1,8 +1,8 @@
 ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 --
 ge-1/2/1.1119   up    up   -- VPSL | - | VSK-Invest | 100M | CHRN,ul.Signalnaya,2v to BPE | 03.09.21 | kozub | 110-1119 --
 ge-1/2/1.1120   up    up   -- VPSL | - | VSK-Invest | 50M | CHRN,ul.Signalnaya,2v to BPE | 10.11.21 | poroshin | 110-1120 --
-xe-2/0/2.1028   up    up   -- VPLS | ZAGS(MinYust) | 30M | CHRN,per.Bolnichnyi,2 to BPE | 30.03.18 | gusev | 110-1028 --
-xe-2/0/2.1118   up    up   -- VPLS | - | Gemotest | CHRN,ul.Revolucii,9a to BPE | 23.08.21 | yakubovskiy | 110-1118 --
+xe-2/0/2.1028   up    up   -- VPLS | - | ZAGS(MinYust) | 30M | CHRN,per.Bolnichnyi,2 to BPE | 30.03.18 | gusev | 110-1028 --
+xe-2/0/2.1118   up    up   -- VPLS | - | Gemotest | 20M | CHRN,ul.Revolucii,9a to BPE | 23.08.21 | yakubovskiy | 110-1118 --
 xe-2/0/3.1016   up    up   -- VPLS | 1267381 | Genbank | 15M | CHRN,ul.Kirova,7 to BPE | 25.01.16 | kasyanov | 110-1016 --
 xe-2/0/3.1021   up    up   -- VPLS | - | ChRCB | 30M | CHRN,ul.Medicinskaya,5 to BPE | 13.05.16 | anife | Bolnica,110-1021 --
 xe-2/0/3.1031   up    up   -- VPLS | 1291433 | ChRCB | 130M | CHRN,ul.Medicinskaya,5 to BPE | 24.05.18 | anife | 2nd,110-1031 --

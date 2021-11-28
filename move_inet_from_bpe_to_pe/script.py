@@ -11,7 +11,7 @@ import getpass
 import csv
 from jinja2 import Environment, FileSystemLoader
 
-def main(pe_name, bpe_ip, user, passwd):
+def main(pe_name, bpe_ip, user, passwd, out_pe_file):
 
     variables = []
     with open("file_28_11.txt", "r", encoding="utf-8") as f:
@@ -58,8 +58,8 @@ def main(pe_name, bpe_ip, user, passwd):
 
     env = Environment(loader=FileSystemLoader("."))
     template = env.get_template("L3VPN.j2")
-
-    with open("L3VPN_config.txt", "w", encoding="utf-8") as f:
+    # save PE config
+    with open(out_pe_file, "w", encoding="utf-8") as f:
         for line in variables:
             f.write(template.render(line))
             f.write("\n")
@@ -126,8 +126,13 @@ def get_ip(desc_string, bpe_ip, user, passwd):
 #--------------main---------------------
 
 if __name__ == "__main__":
+
     # ask pe
     pe_name = str(input("Enter PE (ex: KRCH-00-AR2):" ))
+
+    out_pe_file = pe_name + '.txt'
+
+    out_bpe_file = 'SMFL-04-BPE1' + '_' + 'pe_name.txt'
 
     bpe_ip = "185.64.44.44"
 
@@ -136,5 +141,5 @@ if __name__ == "__main__":
     # get password
     passwd = getpass.getpass()
 
-    main(pe_name, bpe_ip, user, passwd)
+    main(pe_name, bpe_ip, user, passwd, out_pe_file)
 
