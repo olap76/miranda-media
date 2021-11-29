@@ -16,6 +16,8 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
     bpe_iface_file = open(out_bpe_file, 'a')
 
+    bpe_iface_file.write(">>> BEGIN <<<\n")
+
     variables = []
     with open(data_file, "r", encoding="utf-8") as f:
         for line in f:
@@ -40,7 +42,11 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
             # extract lacation to list
             loc_list = line_list[4].split()
-            sw["location"] = loc_list[0].strip()
+            if loc_list[-1] == 'BPE':
+                loc_list.remove('BPE')
+            if loc_list[-1] == 'to':
+                loc_list.remove('to')
+            sw["location"] = ''.join(loc_list)
 
             sw["date"] = line_list[5].strip()
             sw["who"] = line_list[6].strip()
@@ -62,7 +68,7 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
             variables.append(sw)
 
-    bpe_iface_file.write('---')
+    bpe_iface_file.write('>>> END <<<\n\n')
     bpe_iface_file.close()
 
     env = Environment(loader=FileSystemLoader("."))
@@ -144,7 +150,7 @@ if __name__ == "__main__":
 
     out_pe_file = pe_name + '.txt'
 
-    out_bpe_file = 'SMFL-04-BPE1' + '_' + pe_name + '.txt'
+    out_bpe_file = 'BPE.txt'
 
     bpe_ip = "185.64.44.44"
 
