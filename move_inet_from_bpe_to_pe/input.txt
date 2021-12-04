@@ -1,0 +1,2 @@
+xe-2/0/3.1020   up    up   -- VPLS | - | SZO | 10M | STRG,ul.A.Kima,5V to BPE | 02.11.21 | nabokov | 104-1020 --
+xe-2/0/3.1022   up    up   -- VPLS | - | SZO | 10M | s.Avrora,ul.Gagarina,1B to BPE | 02.11.21 | nabokov | 104-1022 --

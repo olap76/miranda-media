@@ -11,7 +11,7 @@ import getpass
 import csv
 from jinja2 import Environment, FileSystemLoader
 
-def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
+def main(in_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
 
 
     bpe_iface_file = open(out_bpe_file, 'a')
@@ -19,12 +19,12 @@ def main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file):
     bpe_iface_file.write(">>> BEGIN <<<\n")
 
     variables = []
-    with open(data_file, "r", encoding="utf-8") as f:
+    with open(in_file, "r", encoding="utf-8") as f:
         for line in f:
 
             sw = {}
 
-            # data_file format:
+            # in_file format:
             # ge-1/2/0.1058   up    up   -- VPLS | - | RNKB | 2M | s.Mezhvodnoe,ul.Pervomaiskaya,3A to BPE | 13.10.20 | nabokov | 110-1058 --
             line_list = line.split("|")
 
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     # ask pe
     pe_name = str(input("Enter PE (ex: KRCH-00-AR2):" ))
 
-    data_file = 'file_28_11.txt'
+    in_file = 'input.txt'
 
     out_pe_file = pe_name + '.txt'
 
@@ -159,5 +159,5 @@ if __name__ == "__main__":
     # get password
     passwd = getpass.getpass()
 
-    main(data_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file)
+    main(in_file, pe_name, bpe_ip, user, passwd, out_pe_file, out_bpe_file)
 
