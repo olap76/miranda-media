@@ -63,7 +63,7 @@ def dev_connect(bpe_ip):
 if __name__ == '__main__':
 
     # get pe
-    bpe_ip = "185.64.44.44"
+    bpe_ip = "185.64.44.X"
     # get password
     password = getpass.getpass()
 
